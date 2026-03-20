@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>커멘드에스 | 특별한 임밍아웃 카드</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    .card-bg { background: linear-gradient(135deg, #FFF5F5 0%, #FFF0F6 30%, #F3F0FF 60%, #EDF2FF 100%); }
+    .baby-icon { animation: gentle-bounce 2.5s ease-in-out infinite; }
+    @keyframes gentle-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .fade-in { animation: fade-in-up 0.7s ease-out forwards; opacity: 0; }
+    @keyframes fade-in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .announcement-card { background: linear-gradient(160deg, #FFFBFE 0%, #FFF0F6 25%, #F5F0FF 50%, #EEF2FF 75%, #FFF5F7 100%); position: relative; overflow: hidden; border: 1px solid #F3E8FF; }
+    .month-btn.selected { background: linear-gradient(135deg, #A78BFA 0%, #F472B6 100%); color: white; border-color: transparent; }
+    .step-dot.active { background: linear-gradient(135deg, #A78BFA, #F472B6); width: 28px; border-radius: 5px; }
+  </style>
+</head>
+<body class="h-full font-['Noto_Sans_KR']">
+  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: linear-gradient(180deg, #FEFBFF 0%, #F8F0FE 50%, #FFF5F7 100%);">
+    
+    <div id="form-view" class="w-full min-h-full flex flex-col items-center justify-start py-8 px-4">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8 fade-in">
+          <div class="baby-icon text-5xl mb-3">👶</div>
+          <h1 class="text-2xl font-bold mb-2 text-[#7C3AED]" style="font-family: 'Gowun Batang', serif;">우리 가족이 찾아와요</h1>
+          <p class="text-sm text-[#A78BFA]">특별한 임밍아웃 카드를 만들어보세요 ✨</p>
+        </div>
+
+        <div class="step-indicator flex gap-2 justify-center mb-8">
+          <div id="dot-1" class="step-dot active w-2.5 h-2.5 rounded-full bg-[#E9D5FF] transition-all"></div>
+          <div id="dot-2" class="step-dot w-2.5 h-2.5 rounded-full bg-[#E9D5FF] transition-all"></div>
+          <div id="dot-3" class="step-dot w-2.5 h-2.5 rounded-full bg-[#E9D5FF] transition-all"></div>
+        </div>
+
+        <div id="step-1" class="fade-in bg-white rounded-2xl p-6 shadow-sm border border-[#F3E8FF]">
+          <h2 class="font-bold text-[#6B21A8] mb-5 flex items-center gap-2">🍼 아기 정보</h2>
+          <div class="mb-5">
+            <label class="block text-sm font-medium mb-2 text-[#7C3AED]">태명</label>
+            <input type="text" id="baby-name" placeholder="예: 복덩이" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none focus:border-[#C084FC]">
+          </div>
+          <div class="mb-5">
+            <label class="block text-sm font-medium mb-2 text-[#7C3AED]">이벤트 대상</label>
+            <div class="flex flex-wrap gap-2" id="recipient-btns">
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="할머니">👵 할머니</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="할아버지">👴 할아버지</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="부모님">👨‍👩‍👧 부모님</button>
+            </div>
+            <input type="text" id="recipient-custom" placeholder="직접 입력" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] mt-3 outline-none">
+          </div>
+          <button id="next-to-step2" class="w-full py-3 rounded-xl text-white font-medium bg-gradient-to-r from-[#A78BFA] to-[#F472B6]">다음으로 →</button>
+        </div>
+
+        <div id="step-2" class="hidden bg-white rounded-2xl p-6 shadow-sm border border-[#F3E8FF]">
+          <h2 class="font-bold text-[#6B21A8] mb-5 flex items-center gap-2">🎬 영상 추가</h2>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <button id="btn-url-mode" class="py-3 rounded-xl text-sm font-medium bg-[#A78BFA] text-white">URL 입력</button>
+            <button id="btn-file-mode" class="py-3 rounded-xl text-sm font-medium border-2 border-[#E9D5FF] text-[#7C3AED]">직접 업로드</button>
+          </div>
+          <input type="text" id="video-url" placeholder="YouTube 주소" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] mb-3 outline-none">
+          <input type="file" id="video-file" accept="video/*" class="hidden">
+          <div id="upload-status" class="hidden text-center p-4 bg-[#F5F0FF] rounded-xl text-xs text-[#7C3AED] mb-3">영상 준비 완료! ✅</div>
+          
+          <div class="flex gap-3">
+            <button id="back-to-step1" class="flex-1 py-3 border-2 border-[#E9D5FF] rounded-xl text-[#7C3AED]">이전</button>
+            <button id="generate-card" class="flex-1 py-3 bg-gradient-to-r from-[#A78BFA] to-[#F472B6] text-white rounded-xl">카드 완성 🎉</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="result-view" class="hidden w-full min-h-full flex flex-col items-center justify-start py-8 px-4">
+      <div class="w-full max-w-md">
+        <div class="announcement-card rounded-3xl p-8 shadow-lg mb-6 text-center">
+          <p id="res-recipient" class="text-sm text-[#A78BFA] mb-2"></p>
+          <h2 class="text-2xl font-bold text-[#6B21A8] mb-6" style="font-family: 'Gowun Batang', serif;">우리 가족이 찾아와요</h2>
+          <div class="inline-block px-8 py-4 rounded-2xl bg-white/50 mb-6 border border-[#F3E8FF]">
+            <p class="text-xs text-[#7C3AED] mb-1">사랑스러운 우리 아기</p>
+            <p id="res-baby-name" class="text-3xl font-bold text-[#6B21A8]" style="font-family: 'Gowun Batang', serif;"></p>
+          </div>
+          
+          <div id="video-container" class="hidden mb-6 rounded-2xl overflow-hidden shadow-inner bg-black">
+            </div>
+
+          <p class="text-[#C084FC] text-sm mt-4">사랑으로 기다리고 있어요 💕</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-[#F3E8FF] text-center mb-6">
+          <h3 class="text-sm font-bold text-[#6B21A8] mb-3">QR 코드로 소식 공유하기</h3>
+          <div id="qrcode" class="flex justify-center p-3 bg-white border-2 border-[#F3E8FF] rounded-xl inline-block"></div>
+        </div>
+        
+        <button onclick="location.reload()" class="w-full py-4 border-2 border-[#E9D5FF] text-[#7C3AED] rounded-xl font-medium">새로 만들기</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let state = { babyName: '', recipient: '', videoType: 'none', videoSrc: '' };
+
+    // Step 이동 로직
+    const showStep = (step) => {
+      document.getElementById('step-1').classList.toggle('hidden', step !== 1);
+      document.getElementById('step-2').classList.toggle('hidden', step !== 2);
+      document.getElementById('dot-1').classList.toggle('active', step === 1);
+      document.getElementById('dot-2').classList.toggle('active', step === 2);
+      document.getElementById('dot-3').classList.toggle('active', step === 3);
+    };
+
+    // 받는 사람 선택
+    document.querySelectorAll('.recipient-btn').forEach(btn => {
+      btn.onclick = () => {
+        state.recipient = btn.dataset.value;
+        document.querySelectorAll('.recipient-btn').forEach(b => b.classList.remove('selected', 'bg-gradient-to-r', 'text-white'));
+        btn.classList.add('selected', 'bg-gradient-to-r', 'text-white');
+      };
+    });
+
+    document.getElementById('next-to-step2').onclick = () => {
+      state.babyName = document.getElementById('baby-name').value;
+      if(!state.babyName || !state.recipient) return alert('정보를 모두 입력해주세요!');
+      showStep(2);
+    };
+
+    // 영상 처리 (핵심!)
+    document.getElementById('btn-file-mode').onclick = () => document.getElementById('video-file').click();
+    document.getElementById('video-file').onchange = (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          state.videoType = 'file';
+          state.videoSrc = ev.target.result;
+          document.getElementById('upload-status').classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    document.getElementById('generate-card').onclick = () => {
+      const url = document.getElementById('video-url').value;
+      if (url) {
+        state.videoType = 'youtube';
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        state.videoSrc = (match && match[2].length === 11) ? match[2] : '';
+      }
+
+      // 결과 화면 렌더링
+      document.getElementById('form-view').classList.add('hidden');
+      document.getElementById('result-view').classList.remove('hidden');
+      document.getElementById('res-recipient').innerText = `${state.recipient}님께 전하는 소식`;
+      document.getElementById('res-baby-name').innerText = state.babyName;
+
+      const container = document.getElementById('video-container');
+      if (state.videoType === 'youtube' && state.videoSrc) {
+        container.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${state.videoSrc}" frameborder="0" allowfullscreen></iframe>`;
+        container.classList.remove('hidden');
+      } else if (state.videoType === 'file' && state.videoSrc) {
+        container.innerHTML = `<video width="100%" controls class="rounded-xl"><source src="${state.videoSrc}" type="video/mp4"></video>`;
+        container.classList.remove('hidden');
+        container.querySelector('video').load(); // 재생 보장
+      }
+
+      // QR 생성 (현재 페이지 URL 기반)
+      new QRCode(document.getElementById("qrcode"), {
+        text: window.location.href,
+        width: 128,
+        height: 128,
+        colorDark : "#6B21A8"
+      });
+      showStep(3);
+    };
+
+    document.getElementById('back-to-step1').onclick = () => showStep(1);
+    lucide.createIcons();
+  </script>
+</body>
+</html>
