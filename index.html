@@ -16,7 +16,7 @@
     .fade-in { animation: fade-in-up 0.7s ease-out forwards; opacity: 0; }
     @keyframes fade-in-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     .announcement-card { background: linear-gradient(160deg, #FFFBFE 0%, #FFF0F6 25%, #F5F0FF 50%, #EEF2FF 75%, #FFF5F7 100%); position: relative; overflow: hidden; border: 1px solid #F3E8FF; }
-    .month-btn.selected { background: linear-gradient(135deg, #A78BFA 0%, #F472B6 100%); color: white; border-color: transparent; }
+    .selected-recipient, .selected-month { background: linear-gradient(135deg, #A78BFA 0%, #F472B6 100%); color: white; border-color: transparent; font-weight: 500;}
     .step-dot.active { background: linear-gradient(135deg, #A78BFA, #F472B6); width: 28px; border-radius: 5px; }
   </style>
 </head>
@@ -38,30 +38,54 @@
         </div>
 
         <div id="step-1" class="fade-in bg-white rounded-2xl p-6 shadow-sm border border-[#F3E8FF]">
-          <h2 class="font-bold text-[#6B21A8] mb-5 flex items-center gap-2">🍼 아기 정보</h2>
+          <h2 class="font-bold text-[#6B21A8] mb-5 flex items-center gap-2">🍼 아기 정보 및 대상</h2>
+          
           <div class="mb-5">
             <label class="block text-sm font-medium mb-2 text-[#7C3AED]">태명</label>
             <input type="text" id="baby-name" placeholder="예: 복덩이" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none focus:border-[#C084FC]">
           </div>
+
           <div class="mb-5">
-            <label class="block text-sm font-medium mb-2 text-[#7C3AED]">이벤트 대상</label>
-            <div class="flex flex-wrap gap-2" id="recipient-btns">
+            <label class="block text-sm font-medium mb-2 text-[#7C3AED]">이벤트 대상 (중복 선택 가능)</label>
+            <div class="flex flex-wrap gap-2 mb-3" id="recipient-btns">
               <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="할머니">👵 할머니</button>
               <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="할아버지">👴 할아버지</button>
-              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="부모님">👨‍👩‍👧 부모님</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="이모">👩‍𦚔 이모</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="이모부">🧔‍♂️ 이모부</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="삼촌">👱‍♂️ 삼촌</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="고모">👵🏻 고모</button>
             </div>
-            <input type="text" id="recipient-custom" placeholder="직접 입력" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] mt-3 outline-none">
+            <input type="text" id="recipient-custom" placeholder="직접 입력 (예: 친구들, 우리 가족)" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none">
           </div>
+
+          <div class="mb-5">
+            <label class="block text-sm font-medium mb-2 text-[#7C3AED]">출산 예정월 (월 선택)</label>
+            <div class="grid grid-cols-4 gap-2 mb-3" id="month-btns">
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="1">1월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="2">2월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="3">3월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="4">4월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="5">5월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="6">6월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="7">7월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="8">8월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="9">9월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="10">10월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="11">11월</button>
+              <button class="month-btn py-3 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]" data-value="12">12월</button>
+            </div>
+          </div>
+
           <button id="next-to-step2" class="w-full py-3 rounded-xl text-white font-medium bg-gradient-to-r from-[#A78BFA] to-[#F472B6]">다음으로 →</button>
         </div>
 
         <div id="step-2" class="hidden bg-white rounded-2xl p-6 shadow-sm border border-[#F3E8FF]">
-          <h2 class="font-bold text-[#6B21A8] mb-5 flex items-center gap-2">🎬 영상 추가</h2>
+          <h2 class="font-bold text-[#6B21A8] mb-5 flex items-center gap-2">🎬 영상 추가 (선택)</h2>
           <div class="grid grid-cols-2 gap-3 mb-4">
-            <button id="btn-url-mode" class="py-3 rounded-xl text-sm font-medium bg-[#A78BFA] text-white">URL 입력</button>
+            <button id="btn-url-mode" class="py-3 rounded-xl text-sm font-medium bg-[#A78BFA] text-white">YouTube URL</button>
             <button id="btn-file-mode" class="py-3 rounded-xl text-sm font-medium border-2 border-[#E9D5FF] text-[#7C3AED]">직접 업로드</button>
           </div>
-          <input type="text" id="video-url" placeholder="YouTube 주소" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] mb-3 outline-none">
+          <input type="text" id="video-url" placeholder="YouTube 주소 입력" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] mb-3 outline-none">
           <input type="file" id="video-file" accept="video/*" class="hidden">
           <div id="upload-status" class="hidden text-center p-4 bg-[#F5F0FF] rounded-xl text-xs text-[#7C3AED] mb-3">영상 준비 완료! ✅</div>
           
@@ -83,6 +107,8 @@
             <p id="res-baby-name" class="text-3xl font-bold text-[#6B21A8]" style="font-family: 'Gowun Batang', serif;"></p>
           </div>
           
+          <p id="res-due" class="text-lg text-[#7C3AED] font-semibold mb-6"></p>
+
           <div id="video-container" class="hidden mb-6 rounded-2xl overflow-hidden shadow-inner bg-black">
             </div>
 
@@ -91,6 +117,7 @@
 
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-[#F3E8FF] text-center mb-6">
           <h3 class="text-sm font-bold text-[#6B21A8] mb-3">QR 코드로 소식 공유하기</h3>
+          <p class="text-xs text-[#A78BFA] mb-4">이 QR 코드를 스캔하여 가족들에게 소식을 전해보세요!</p>
           <div id="qrcode" class="flex justify-center p-3 bg-white border-2 border-[#F3E8FF] rounded-xl inline-block"></div>
         </div>
         
@@ -100,9 +127,17 @@
   </div>
 
   <script>
-    let state = { babyName: '', recipient: '', videoType: 'none', videoSrc: '' };
+    // State object
+    let state = {
+      babyName: '',
+      presetRecipients: [],
+      customRecipient: '',
+      dueMonth: null,
+      videoType: 'none',
+      videoSrc: ''
+    };
 
-    // Step 이동 로직
+    // Helper functions
     const showStep = (step) => {
       document.getElementById('step-1').classList.toggle('hidden', step !== 1);
       document.getElementById('step-2').classList.toggle('hidden', step !== 2);
@@ -111,27 +146,71 @@
       document.getElementById('dot-3').classList.toggle('active', step === 3);
     };
 
-    // 받는 사람 선택
+    const showToast = (message) => {
+      alert(message); // Simplified for this example. Can replace with a custom toast element.
+    };
+
+    // Recipient Button Multi-select
     document.querySelectorAll('.recipient-btn').forEach(btn => {
       btn.onclick = () => {
-        state.recipient = btn.dataset.value;
-        document.querySelectorAll('.recipient-btn').forEach(b => b.classList.remove('selected', 'bg-gradient-to-r', 'text-white'));
-        btn.classList.add('selected', 'bg-gradient-to-r', 'text-white');
+        const val = btn.dataset.value;
+        const index = state.presetRecipients.indexOf(val);
+        if (index > -1) {
+          state.presetRecipients.splice(index, 1);
+          btn.classList.remove('selected-recipient');
+          btn.classList.remove('bg-gradient-to-r', 'text-white');
+        } else {
+          state.presetRecipients.push(val);
+          btn.classList.add('selected-recipient');
+          btn.classList.add('bg-gradient-to-r', 'text-white');
+        }
       };
     });
 
+    // Month Button Selection
+    document.querySelectorAll('.month-btn').forEach(btn => {
+      btn.onclick = () => {
+        state.dueMonth = btn.dataset.value;
+        document.querySelectorAll('.month-btn').forEach(b => {
+          b.classList.remove('selected-month');
+          b.classList.remove('bg-gradient-to-r', 'text-white');
+        });
+        btn.classList.add('selected-month');
+        btn.classList.add('bg-gradient-to-r', 'text-white');
+      };
+    });
+
+    // Step navigation
     document.getElementById('next-to-step2').onclick = () => {
-      state.babyName = document.getElementById('baby-name').value;
-      if(!state.babyName || !state.recipient) return alert('정보를 모두 입력해주세요!');
+      state.babyName = document.getElementById('baby-name').value.trim();
+      state.customRecipient = document.getElementById('recipient-custom').value.trim();
+
+      if (!state.babyName) return showToast('아기 태명을 입력해주세요! 🍼');
+      if (state.presetRecipients.length === 0 && !state.customRecipient) return showToast('소식을 전할 대상을 최소 1명 선택하거나 입력해주세요! 👩‍👩‍👧‍👦');
+      if (!state.dueMonth) return showToast('출산 예정월을 선택해주세요! 📅');
       showStep(2);
     };
 
-    // 영상 처리 (핵심!)
-    document.getElementById('btn-file-mode').onclick = () => document.getElementById('video-file').click();
+    // Video processing
+    document.getElementById('btn-url-mode').onclick = () => {
+      document.getElementById('video-url').classList.remove('hidden');
+      document.getElementById('btn-url-mode').classList.add('bg-[#A78BFA]', 'text-white');
+      document.getElementById('btn-file-mode').classList.remove('bg-[#A78BFA]', 'text-white');
+      document.getElementById('btn-file-mode').classList.add('border-2', 'border-[#E9D5FF]', 'text-[#7C3AED]');
+    };
+
+    document.getElementById('btn-file-mode').onclick = () => {
+      document.getElementById('video-file').click();
+      document.getElementById('btn-file-mode').classList.add('bg-[#A78BFA]', 'text-white');
+      document.getElementById('btn-url-mode').classList.remove('bg-[#A78BFA]', 'text-white');
+      document.getElementById('btn-url-mode').classList.add('border-2', 'border-[#E9D5FF]', 'text-[#7C3AED]');
+    };
+
     document.getElementById('video-file').onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
+        reader.onerror = () => showToast('영상 파일을 읽을 수 없습니다 😢');
         reader.onload = (ev) => {
           state.videoType = 'file';
           state.videoSrc = ev.target.result;
@@ -141,8 +220,9 @@
       }
     };
 
+    // Generate Card
     document.getElementById('generate-card').onclick = () => {
-      const url = document.getElementById('video-url').value;
+      const url = document.getElementById('video-url').value.trim();
       if (url) {
         state.videoType = 'youtube';
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -150,33 +230,43 @@
         state.videoSrc = (match && match[2].length === 11) ? match[2] : '';
       }
 
-      // 결과 화면 렌더링
+      // Populate card view
       document.getElementById('form-view').classList.add('hidden');
       document.getElementById('result-view').classList.remove('hidden');
-      document.getElementById('res-recipient').innerText = `${state.recipient}님께 전하는 소식`;
-      document.getElementById('res-baby-name').innerText = state.babyName;
 
-      const container = document.getElementById('video-container');
+      const recipientsStr = [...state.presetRecipients, state.customRecipient].filter(Boolean).join(', ');
+      document.getElementById('res-recipient').innerText = `${recipientsStr}님께 전하는 소식`;
+      document.getElementById('res-baby-name').innerText = state.babyName;
+      document.getElementById('res-due').innerText = `✨ ${state.dueMonth}월에 만나요! 🎀`;
+
+      const videoContainer = document.getElementById('video-container');
+      videoContainer.innerHTML = '';
       if (state.videoType === 'youtube' && state.videoSrc) {
-        container.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${state.videoSrc}" frameborder="0" allowfullscreen></iframe>`;
-        container.classList.remove('hidden');
+        videoContainer.innerHTML = `<iframe width="100%" height="220" src="https://www.youtube.com/embed/${state.videoSrc}" frameborder="0" allowfullscreen></iframe>`;
+        videoContainer.classList.remove('hidden');
       } else if (state.videoType === 'file' && state.videoSrc) {
-        container.innerHTML = `<video width="100%" controls class="rounded-xl"><source src="${state.videoSrc}" type="video/mp4"></video>`;
-        container.classList.remove('hidden');
-        container.querySelector('video').load(); // 재생 보장
+        videoContainer.innerHTML = `<video width="100%" controls controlsList="nodownload" class="rounded-xl"><source src="${state.videoSrc}" type="video/mp4"></video>`;
+        videoContainer.classList.remove('hidden');
+      } else {
+        videoContainer.classList.add('hidden');
       }
 
-      // QR 생성 (현재 페이지 URL 기반)
-      new QRCode(document.getElementById("qrcode"), {
-        text: window.location.href,
-        width: 128,
-        height: 128,
-        colorDark : "#6B21A8"
+      // Generate QR (with text summary)
+      const qrContainer = document.getElementById("qrcode");
+      qrContainer.innerHTML = ''; // Clear previous QR
+      const qrSummary = `임밍아웃 카드 🤰\n${recipientsStr}님께 전하는 소식\n✨ 우리 가족이 찾아와요 ✨\n태명: ${state.babyName}\n${state.dueMonth}월에 만나요! 🎀\n사랑으로 기다리고 있어요 💕`;
+      new QRCode(qrContainer, {
+        text: qrSummary,
+        width: 160,
+        height: 160,
+        colorDark : "#6B21A8",
+        correctLevel : QRCode.CorrectLevel.H
       });
       showStep(3);
     };
 
     document.getElementById('back-to-step1').onclick = () => showStep(1);
+
     lucide.createIcons();
   </script>
 </body>
