@@ -36,7 +36,7 @@
         <div class="fade-in bg-white rounded-[2rem] p-6 shadow-sm border border-[#F3E8FF] space-y-6">
           <div>
             <label class="block text-xs font-bold mb-2 text-[#7C3AED]">아기 태명</label>
-            <input type="text" id="input-baby-name" placeholder="예: 복덩이" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none focus:border-[#C084FC]">
+            <input type="text" id="input-baby-name" placeholder="예: 토담이" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none focus:border-[#C084FC]">
           </div>
 
           <div>
@@ -59,32 +59,37 @@
           <div>
             <label class="block text-xs font-bold mb-2 text-[#7C3AED]">영상 추가 (선택)</label>
             <div class="grid grid-cols-2 gap-2 mb-3">
-              <button id="mode-url" class="py-2 rounded-xl text-[11px] font-bold bg-[#A78BFA] text-white hover:opacity-90">유튜브 URL</button>
-              <button id="mode-file" class="py-2 rounded-xl text-[11px] font-bold border-2 border-[#E9D5FF] text-[#7C3AED] hover:bg-gray-50">파일 업로드</button>
+              <button id="mode-url" class="py-2 rounded-xl text-[11px] font-bold bg-[#A78BFA] text-white">유튜브 URL</button>
+              <button id="mode-file" class="py-2 rounded-xl text-[11px] font-bold border-2 border-[#E9D5FF] text-[#7C3AED]">파일 업로드</button>
             </div>
             <div id="area-url">
-              <input type="text" id="input-video-url" placeholder="YouTube 주소를 붙여넣으세요" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm focus:border-[#A78BFA]">
+              <input type="text" id="input-video-url" placeholder="YouTube 주소를 붙여넣으세요" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm">
             </div>
             <div id="area-file" class="hidden text-center">
               <input type="file" id="input-video-file" accept="video/*" class="hidden">
-              <button onclick="document.getElementById('input-video-file').click()" class="w-full py-6 border-2 border-dashed border-[#E9D5FF] rounded-xl text-[#A78BFA] text-xs flex flex-col items-center hover:border-[#A78BFA] hover:bg-gray-50">
+              <button onclick="document.getElementById('input-video-file').click()" class="w-full py-6 border-2 border-dashed border-[#E9D5FF] rounded-xl text-[#A78BFA] text-xs flex flex-col items-center">
                 <i data-lucide="upload" class="mb-1"></i> 영상 파일 선택
               </button>
               <p id="file-name" class="text-[10px] text-[#7C3AED] mt-1 font-bold"></p>
-              <p class="text-[9px] text-[#A78BFA] mt-1">* 파일 업로드는 임시 미리보기만 가능합니다.<br>가족 공유를 위해서는 유튜브 URL을 권장합니다.</p>
             </div>
           </div>
 
-          <button id="btn-generate" class="w-full py-4 rounded-2xl text-white font-bold bg-gradient-to-r from-[#A78BFA] to-[#F472B6] shadow-lg text-lg transform hover:-translate-y-0.5 transition-all">카드 완성하기 ✨</button>
+          <button id="btn-generate" class="w-full py-4 rounded-2xl text-white font-bold bg-gradient-to-r from-[#A78BFA] to-[#F472B6] shadow-lg text-lg">카드 완성하기 ✨</button>
         </div>
       </div>
     </div>
 
-    <div id="card-view" class="hidden w-full min-h-full flex flex-col items-center py-8 px-4 relative">
+    <div id="card-view" class="hidden w-full min-h-full flex flex-col items-center py-8 px-4">
       <div class="w-full max-w-md">
         <div class="announcement-card rounded-[2.5rem] p-8 shadow-xl mb-6 text-center border-4 border-white">
-          <p id="view-recipient" class="text-sm text-[#A78BFA] mb-2 font-medium"></p>
-          <h2 class="text-2xl font-bold text-[#6B21A8] mb-4" style="font-family: 'Gowun Batang', serif;">우리 가족이 찾아와요</h2>
+          <div id="view-letter" class="mb-6 px-2">
+            <p class="text-lg font-bold text-[#6B21A8] leading-relaxed" style="font-family: 'Gowun Batang', serif;">
+              "<span id="res-target"></span>" "<span id="res-baby"></span>"이에요 :)<br>
+              많이 기다리셨죠?<br>
+              엄마 뱃 속에 무럭무럭 자라서<br>
+              우리 <span id="res-month"></span>월에 봬요~
+            </p>
+          </div>
           
           <div class="flex justify-center mb-6">
             <img src="image2.png" alt="Baby Sheep" class="w-32 h-auto baby-icon" style="filter: drop-shadow(0 4px 6px rgba(107, 33, 168, 0.2));">
@@ -92,25 +97,22 @@
 
           <div id="video-container" class="hidden mb-6 rounded-2xl overflow-hidden shadow-lg bg-black aspect-video relative"></div>
           
-          <div class="inline-block px-8 py-4 rounded-2xl bg-white/60 mb-6 border border-[#F3E8FF]">
-            <p id="view-baby-name" class="text-3xl font-bold text-[#6B21A8]" style="font-family: 'Gowun Batang', serif;"></p>
+          <div class="inline-block px-8 py-3 rounded-2xl bg-white/60 border border-[#F3E8FF]">
+             <p class="text-2xl font-bold text-[#6B21A8]" style="font-family: 'Gowun Batang', serif;" id="final-baby-name"></p>
           </div>
-          <p id="view-due" class="text-lg text-[#7C3AED] font-bold"></p>
-          <p class="text-[10px] text-[#A78BFA] mt-4">커멘드에스와 함께하는 특별한 순간 💕</p>
+          <p class="text-[#C084FC] text-[10px] mt-6 leading-tight">커멘드에스와 함께하는 특별한 기록 💕</p>
         </div>
 
         <div id="owner-controls" class="hidden">
           <div class="bg-white rounded-3xl p-6 shadow-md border border-[#F3E8FF] text-center mb-6">
-            <h3 class="text-xs font-bold text-[#6B21A8] mb-4">✨ 가족들에게 공유할 QR 코드</h3>
+            <h3 class="text-xs font-bold text-[#6B21A8] mb-4">가족들에게 공유할 QR 코드</h3>
             <div id="qrcode" class="flex justify-center mb-4 p-2 bg-white inline-block border border-gray-100 mx-auto"></div>
-            <button id="btn-copy-qr" class="w-full py-3 bg-[#F5F0FF] text-[#7C3AED] rounded-xl text-sm font-bold flex items-center justify-center gap-2 hover:bg-[#A78BFA] hover:text-white transition-all">
+            <button id="btn-copy-qr" class="w-full py-3 bg-[#F5F0FF] text-[#7C3AED] rounded-xl text-sm font-bold flex items-center justify-center gap-2">
               <i data-lucide="copy" class="w-4 h-4"></i> QR 이미지 복사하기
             </button>
-            <p class="text-[10px] text-[#A78BFA] mt-2 leading-tight">복사가 안 된다면 QR을 길게 눌러 저장해 주세요!<br>(직접 업로드한 영상은 QR 공유 시 포함되지 않습니다.)</p>
           </div>
-          <button onclick="location.href=location.pathname" class="w-full py-3 border-2 border-[#E9D5FF] text-[#7C3AED] rounded-xl text-sm font-medium bg-white hover:bg-gray-50">새로 만들기</button>
+          <button onclick="location.href=location.pathname" class="w-full py-3 border-2 border-[#E9D5FF] text-[#7C3AED] rounded-xl text-sm font-medium bg-white">새로 만들기</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -118,7 +120,6 @@
   <script>
     let state = { babyName: '', recipients: [], month: '', vType: 'url', vSrc: '' };
 
-    // UI 초기화
     const monthContainer = document.getElementById('month-btns');
     for(let i=1; i<=12; i++) {
       const btn = document.createElement('button');
@@ -145,7 +146,6 @@
       };
     });
 
-    // 영상 모드 전환
     document.getElementById('mode-url').onclick = () => {
       state.vType = 'url';
       document.getElementById('area-url').classList.remove('hidden');
@@ -161,18 +161,16 @@
       document.getElementById('mode-url').classList.remove('bg-[#A78BFA]', 'text-white');
     };
 
-    // 파일 리더
     document.getElementById('input-video-file').onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
         document.getElementById('file-name').innerText = `✅ 선택됨: ${file.name}`;
         const reader = new FileReader();
-        reader.onload = (ev) => { state.vSrc = ev.target.result; }; // Base64
+        reader.onload = (ev) => { state.vSrc = ev.target.result; };
         reader.readAsDataURL(file);
       }
     };
 
-    // 카드 생성
     document.getElementById('btn-generate').onclick = async () => {
       state.babyName = document.getElementById('input-baby-name').value;
       const vUrl = document.getElementById('input-video-url').value;
@@ -182,23 +180,19 @@
 
       if(!state.babyName || allRecs.length === 0 || !state.month) return alert('정보를 모두 입력해주세요!');
 
-      // 공유용 데이터 인코딩 (파일 업로드 시 vSrc는 제외하여 QR 용량 최적화)
       const data = { n: state.babyName, r: allRecs.join(', '), m: state.month, v: (state.vType === 'url' ? vUrl : '') };
       const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
       const shareUrl = `${window.location.origin}${window.location.pathname}?card=${encoded}`;
 
-      // 결과 화면 렌더링 (파일 업로드 시에만 vRaw 전달하여 로컬 자동 재생 보장)
       renderCard({ ...data, vRaw: (state.vType === 'file' ? state.vSrc : '') });
       
       const qrDiv = document.getElementById("qrcode");
       qrDiv.innerHTML = "";
       new QRCode(qrDiv, { text: shareUrl, width: 140, height: 140, colorDark : "#6B21A8" });
-      
       document.getElementById('owner-controls').classList.remove('hidden');
       window.scrollTo(0,0);
     };
 
-    // QR 복사
     document.getElementById('btn-copy-qr').onclick = async () => {
       const qrDiv = document.getElementById('qrcode');
       const canvas = qrDiv.querySelector('canvas');
@@ -208,52 +202,46 @@
         if (canvas) blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
         else if (img) { const res = await fetch(img.src); blob = await res.blob(); }
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        alert('QR 코드가 복사되었습니다! 카카오톡에 붙여넣기 해보세요.');
+        alert('QR 코드가 복사되었습니다!');
       } catch (err) { alert('이미지를 길게 눌러 저장해 주세요!'); }
     };
 
-    // 카드 렌더링 (자동 재생 최적화)
     function renderCard(data) {
       document.getElementById('create-view').classList.add('hidden');
       document.getElementById('card-view').classList.remove('hidden');
-      document.getElementById('view-recipient').innerText = `${data.r}님께 전하는 소식`;
-      document.getElementById('view-baby-name').innerText = data.n;
-      document.getElementById('view-due').innerText = `✨ ${data.m}월에 만나요! 🎀`;
+      
+      // 문구 업데이트 로직
+      document.getElementById('res-target').innerText = data.r;
+      document.getElementById('res-baby').innerText = data.n;
+      document.getElementById('res-month').innerText = data.m;
+      document.getElementById('final-baby-name').innerText = data.n;
 
       const container = document.getElementById('video-container');
       container.innerHTML = '';
-      if (data.vRaw) { // 직접 업로드한 파일 (로컬 미리보기)
-        container.innerHTML = `<video src="${data.vRaw}" autoplay muted playsinline controls class="w-full h-full object-cover rounded-2xl border border-gray-100 shadow-inner"></video>`;
+      if (data.vRaw) {
+        container.innerHTML = `<video src="${data.vRaw}" autoplay muted playsinline controls class="w-full h-full object-cover rounded-2xl"></video>`;
         container.classList.remove('hidden');
-      } else if (data.v) { // 유튜브 URL
+      } else if (data.v) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = data.v.match(regExp);
         const vidId = (match && match[2].length === 11) ? match[2] : null;
         if (vidId) {
-          container.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&playlist=${vidId}&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="rounded-2xl border border-gray-100 shadow-inner"></iframe>`;
+          container.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&playlist=${vidId}&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="rounded-2xl"></iframe>`;
           container.classList.remove('hidden');
         }
-      } else {
-        container.classList.add('hidden');
       }
     }
 
-    // 주소 로딩 (viewer 모드)
     window.onload = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const cardData = urlParams.get('card');
       if (cardData) {
         try {
-          // 공유된 데이터는 vRaw(파일 Base64)가 없으므로 유튜브 iframe만 렌더링됨
           const decoded = JSON.parse(decodeURIComponent(atob(cardData)));
           renderCard(decoded);
-          // 가족들에게는 사장님 전용 QR 공유 버튼을 숨김
           document.getElementById('owner-controls').classList.add('hidden'); 
         } catch (e) { document.getElementById('create-view').classList.remove('hidden'); }
-      } else { 
-        // 카드 만드는 페이지
-        document.getElementById('create-view').classList.remove('hidden'); 
-      }
+      } else { document.getElementById('create-view').classList.remove('hidden'); }
       lucide.createIcons();
     };
   </script>
