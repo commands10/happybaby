@@ -7,9 +7,11 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Single+Day&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
+    body { font-family: 'Single Day', cursive; }
+    .font-cute { font-family: 'Gaegu', cursive; }
     .baby-icon { animation: gentle-bounce 2.5s ease-in-out infinite; }
     @keyframes gentle-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     .fade-in { animation: fade-in-up 0.7s ease-out forwards; opacity: 0; }
@@ -18,100 +20,100 @@
     .selected-btn { background: linear-gradient(135deg, #A78BFA 0%, #F472B6 100%) !important; color: white !important; border-color: transparent !important; box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3); }
   </style>
 </head>
-<body class="h-full font-['Noto_Sans_KR'] bg-[#FEFBFF]">
+<body class="h-full bg-[#FEFBFF]">
 
   <div id="app-wrapper" class="h-full w-full overflow-auto">
     
     <div id="create-view" class="hidden w-full min-h-full flex flex-col items-center py-8 px-4">
-      <div class="w-full max-w-md">
-        <div class="text-center mb-6 fade-in">
-          <div class="baby-icon text-5xl mb-3">👶</div>
-          <h1 class="text-2xl font-bold mb-2 text-[#7C3AED]" style="font-family: 'Gowun Batang', serif;">우리 가족이 찾아와요</h1>
+      <div class="w-full max-w-md text-center">
+        <div class="mb-6 fade-in pt-4">
+          <h1 class="text-3xl font-bold mb-2 text-[#7C3AED] font-cute">우리 가족이 찾아와요</h1>
           <div class="flex justify-center mb-4">
             <img src="image2.png" alt="Baby Sheep" class="w-28 h-auto baby-icon" style="filter: drop-shadow(0 4px 6px rgba(124, 58, 237, 0.2));">
           </div>
-          <p class="text-xs text-[#A78BFA]">특별한 소식을 담은 카드를 만들어보세요 ✨</p>
+          <p class="text-sm text-[#A78BFA]">소중한 소식을 담은 특별한 카드 ✨</p>
         </div>
 
-        <div class="fade-in bg-white rounded-[2rem] p-6 shadow-sm border border-[#F3E8FF] space-y-6">
+        <div class="fade-in bg-white rounded-[2.5rem] p-8 shadow-sm border border-[#F3E8FF] space-y-6 text-left">
           <div>
-            <label class="block text-xs font-bold mb-2 text-[#7C3AED]">아기 태명</label>
-            <input type="text" id="input-baby-name" placeholder="예: 토담이" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none focus:border-[#C084FC]">
+            <label class="block text-sm font-bold mb-2 text-[#7C3AED]">아기 태명</label>
+            <input type="text" id="input-baby-name" placeholder="예: 토담이" class="w-full px-4 py-3 rounded-2xl border-2 border-[#E9D5FF] outline-none focus:border-[#C084FC] text-lg">
           </div>
 
           <div>
-            <label class="block text-xs font-bold mb-2 text-[#7C3AED]">소식을 전할 가족 (중복 선택)</label>
-            <div class="flex flex-wrap gap-2 mb-3" id="recipient-btns">
-              <button class="recipient-btn px-4 py-2 rounded-full text-xs border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">할머니</button>
-              <button class="recipient-btn px-4 py-2 rounded-full text-xs border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">할아버지</button>
-              <button class="recipient-btn px-4 py-2 rounded-full text-xs border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">이모</button>
-              <button class="recipient-btn px-4 py-2 rounded-full text-xs border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">삼촌</button>
-              <button class="recipient-btn px-4 py-2 rounded-full text-xs border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">고모</button>
+            <label class="block text-sm font-bold mb-2 text-[#7C3AED]">소식을 전할 대상</label>
+            <div class="flex flex-wrap gap-2 mb-3">
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">할머니</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">할아버지</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">이모</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">삼촌</button>
+              <button class="recipient-btn px-4 py-2 rounded-full text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]">고모</button>
             </div>
-            <input type="text" id="input-custom-recipient" placeholder="직접 입력창" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm font-medium">
+            <input type="text" id="input-custom-recipient" placeholder="직접 입력하기" class="w-full px-4 py-3 rounded-2xl border-2 border-[#E9D5FF] outline-none text-base">
           </div>
 
           <div>
-            <label class="block text-xs font-bold mb-2 text-[#7C3AED]">출산 예정월</label>
+            <label class="block text-sm font-bold mb-2 text-[#7C3AED]">출산 예정월</label>
             <div class="grid grid-cols-4 gap-2" id="month-btns"></div>
           </div>
 
           <div>
-            <label class="block text-xs font-bold mb-2 text-[#7C3AED]">영상 추가 (선택)</label>
+            <label class="block text-sm font-bold mb-2 text-[#7C3AED]">영상 추가</label>
             <div class="grid grid-cols-2 gap-2 mb-3">
-              <button id="mode-url" class="py-2 rounded-xl text-[11px] font-bold bg-[#A78BFA] text-white">유튜브 URL</button>
-              <button id="mode-file" class="py-2 rounded-xl text-[11px] font-bold border-2 border-[#E9D5FF] text-[#7C3AED]">파일 업로드</button>
+              <button id="mode-url" class="py-2 rounded-xl text-xs font-bold bg-[#A78BFA] text-white">유튜브 URL</button>
+              <button id="mode-file" class="py-2 rounded-xl text-xs font-bold border-2 border-[#E9D5FF] text-[#7C3AED]">파일 업로드</button>
             </div>
             <div id="area-url">
-              <input type="text" id="input-video-url" placeholder="YouTube 주소를 붙여넣으세요" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm">
+              <input type="text" id="input-video-url" placeholder="YouTube 주소 복사/붙여넣기" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm">
             </div>
             <div id="area-file" class="hidden text-center">
               <input type="file" id="input-video-file" accept="video/*" class="hidden">
-              <button onclick="document.getElementById('input-video-file').click()" class="w-full py-6 border-2 border-dashed border-[#E9D5FF] rounded-xl text-[#A78BFA] text-xs flex flex-col items-center">
+              <button onclick="document.getElementById('input-video-file').click()" class="w-full py-6 border-2 border-dashed border-[#E9D5FF] rounded-2xl text-[#A78BFA] text-xs flex flex-col items-center hover:bg-gray-50">
                 <i data-lucide="upload" class="mb-1"></i> 영상 파일 선택
               </button>
-              <p id="file-name" class="text-[10px] text-[#7C3AED] mt-1 font-bold"></p>
+              <p id="file-name" class="text-xs text-[#7C3AED] mt-1 font-bold"></p>
             </div>
           </div>
 
-          <button id="btn-generate" class="w-full py-4 rounded-2xl text-white font-bold bg-gradient-to-r from-[#A78BFA] to-[#F472B6] shadow-lg text-lg">카드 완성하기 ✨</button>
+          <button id="btn-generate" class="w-full py-4 rounded-[2rem] text-white text-xl font-bold bg-gradient-to-r from-[#A78BFA] to-[#F472B6] shadow-lg transform active:scale-95 transition-all">카드 완성하기 💖</button>
         </div>
       </div>
     </div>
 
     <div id="card-view" class="hidden w-full min-h-full flex flex-col items-center py-8 px-4">
       <div class="w-full max-w-md">
-        <div class="announcement-card rounded-[2.5rem] p-8 shadow-xl mb-6 text-center border-4 border-white">
-          <div id="view-letter" class="mb-6 px-2">
-            <p class="text-lg font-bold text-[#6B21A8] leading-relaxed" style="font-family: 'Gowun Batang', serif;">
-              "<span id="res-target"></span>" "<span id="res-baby"></span>"이에요 :)<br>
+        <div class="announcement-card rounded-[3rem] p-10 shadow-xl mb-6 text-center border-4 border-white">
+          
+          <div id="view-letter" class="mb-8 px-2">
+            <p class="text-2xl font-bold text-[#6B21A8] leading-relaxed font-cute">
+              "<span id="res-target" class="text-[#F472B6] font-bold"></span>" "<span id="res-baby" class="text-[#F472B6] font-bold"></span>"이에요 :)<br>
               많이 기다리셨죠?<br>
-              엄마 뱃 속에 무럭무럭 자라서<br>
-              우리 <span id="res-month"></span>월에 봬요~
+              엄마 뱃속에서 무럭무럭 자라서<br>
+              우리 <span id="res-month" class="text-[#F472B6] font-bold"></span>월에 봬요~
             </p>
           </div>
           
-          <div class="flex justify-center mb-6">
-            <img src="image2.png" alt="Baby Sheep" class="w-32 h-auto baby-icon" style="filter: drop-shadow(0 4px 6px rgba(107, 33, 168, 0.2));">
+          <div class="flex justify-center mb-8">
+            <img src="image2.png" alt="Baby Sheep" class="w-36 h-auto baby-icon" style="filter: drop-shadow(0 6px 10px rgba(107, 33, 168, 0.2));">
           </div>
 
-          <div id="video-container" class="hidden mb-6 rounded-2xl overflow-hidden shadow-lg bg-black aspect-video relative"></div>
+          <div id="video-container" class="hidden mb-8 rounded-[2rem] overflow-hidden shadow-lg bg-black aspect-video relative"></div>
           
-          <div class="inline-block px-8 py-3 rounded-2xl bg-white/60 border border-[#F3E8FF]">
-             <p class="text-2xl font-bold text-[#6B21A8]" style="font-family: 'Gowun Batang', serif;" id="final-baby-name"></p>
+          <div class="inline-block px-10 py-4 rounded-[2rem] bg-white/70 border border-[#F3E8FF]">
+             <p class="text-3xl font-bold text-[#6B21A8] font-cute" id="final-baby-name"></p>
           </div>
-          <p class="text-[#C084FC] text-[10px] mt-6 leading-tight">커멘드에스와 함께하는 특별한 기록 💕</p>
+          <p class="text-[#A78BFA] text-xs mt-8">커멘드에스와 함께하는 소중한 기록 💕</p>
         </div>
 
         <div id="owner-controls" class="hidden">
-          <div class="bg-white rounded-3xl p-6 shadow-md border border-[#F3E8FF] text-center mb-6">
+          <div class="bg-white rounded-[2.5rem] p-8 shadow-md border border-[#F3E8FF] text-center mb-6">
             <h3 class="text-xs font-bold text-[#6B21A8] mb-4">가족들에게 공유할 QR 코드</h3>
-            <div id="qrcode" class="flex justify-center mb-4 p-2 bg-white inline-block border border-gray-100 mx-auto"></div>
-            <button id="btn-copy-qr" class="w-full py-3 bg-[#F5F0FF] text-[#7C3AED] rounded-xl text-sm font-bold flex items-center justify-center gap-2">
-              <i data-lucide="copy" class="w-4 h-4"></i> QR 이미지 복사하기
+            <div id="qrcode" class="flex justify-center mb-6 p-3 bg-white inline-block border-2 border-[#F3E8FF] rounded-2xl mx-auto shadow-sm"></div>
+            <button id="btn-copy-qr" class="w-full py-4 bg-[#F5F0FF] text-[#7C3AED] rounded-2xl text-base font-bold flex items-center justify-center gap-2 hover:bg-[#A78BFA] hover:text-white transition-all">
+              <i data-lucide="copy" class="w-5 h-5"></i> QR 이미지 복사하기
             </button>
           </div>
-          <button onclick="location.href=location.pathname" class="w-full py-3 border-2 border-[#E9D5FF] text-[#7C3AED] rounded-xl text-sm font-medium bg-white">새로 만들기</button>
+          <button onclick="location.href=location.pathname" class="w-full py-4 border-2 border-[#E9D5FF] text-[#7C3AED] rounded-2xl font-bold bg-white hover:bg-gray-50 transition-all">새로 만들기</button>
         </div>
       </div>
     </div>
@@ -120,10 +122,11 @@
   <script>
     let state = { babyName: '', recipients: [], month: '', vType: 'url', vSrc: '' };
 
+    // 월 버튼 세팅
     const monthContainer = document.getElementById('month-btns');
     for(let i=1; i<=12; i++) {
       const btn = document.createElement('button');
-      btn.className = "month-btn py-2 rounded-xl text-xs border-2 border-[#E9D5FF] bg-white text-[#6B21A8]";
+      btn.className = "month-btn py-2 rounded-xl text-sm border-2 border-[#E9D5FF] bg-white text-[#6B21A8]";
       btn.innerText = `${i}월`;
       btn.onclick = () => {
         state.month = i;
@@ -133,6 +136,7 @@
       monthContainer.appendChild(btn);
     }
 
+    // 대상 선택 세팅
     document.querySelectorAll('.recipient-btn').forEach(btn => {
       btn.onclick = () => {
         const name = btn.innerText;
@@ -146,6 +150,7 @@
       };
     });
 
+    // 영상 모드 전환
     document.getElementById('mode-url').onclick = () => {
       state.vType = 'url';
       document.getElementById('area-url').classList.remove('hidden');
@@ -161,6 +166,7 @@
       document.getElementById('mode-url').classList.remove('bg-[#A78BFA]', 'text-white');
     };
 
+    // 파일 업로드
     document.getElementById('input-video-file').onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
@@ -171,6 +177,7 @@
       }
     };
 
+    // 카드 생성
     document.getElementById('btn-generate').onclick = async () => {
       state.babyName = document.getElementById('input-baby-name').value;
       const vUrl = document.getElementById('input-video-url').value;
@@ -188,11 +195,12 @@
       
       const qrDiv = document.getElementById("qrcode");
       qrDiv.innerHTML = "";
-      new QRCode(qrDiv, { text: shareUrl, width: 140, height: 140, colorDark : "#6B21A8" });
+      new QRCode(qrDiv, { text: shareUrl, width: 160, height: 160, colorDark : "#6B21A8" });
       document.getElementById('owner-controls').classList.remove('hidden');
       window.scrollTo(0,0);
     };
 
+    // QR 복사
     document.getElementById('btn-copy-qr').onclick = async () => {
       const qrDiv = document.getElementById('qrcode');
       const canvas = qrDiv.querySelector('canvas');
@@ -202,15 +210,15 @@
         if (canvas) blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
         else if (img) { const res = await fetch(img.src); blob = await res.blob(); }
         await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        alert('QR 코드가 복사되었습니다!');
+        alert('QR 코드가 복사되었습니다! 소중한 사람들에게 전달해 보세요 💖');
       } catch (err) { alert('이미지를 길게 눌러 저장해 주세요!'); }
     };
 
+    // 카드 렌더링
     function renderCard(data) {
       document.getElementById('create-view').classList.add('hidden');
       document.getElementById('card-view').classList.remove('hidden');
       
-      // 문구 업데이트 로직
       document.getElementById('res-target').innerText = data.r;
       document.getElementById('res-baby').innerText = data.n;
       document.getElementById('res-month').innerText = data.m;
@@ -219,14 +227,14 @@
       const container = document.getElementById('video-container');
       container.innerHTML = '';
       if (data.vRaw) {
-        container.innerHTML = `<video src="${data.vRaw}" autoplay muted playsinline controls class="w-full h-full object-cover rounded-2xl"></video>`;
+        container.innerHTML = `<video src="${data.vRaw}" autoplay muted playsinline controls class="w-full h-full object-cover rounded-[2rem] shadow-inner"></video>`;
         container.classList.remove('hidden');
       } else if (data.v) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = data.v.match(regExp);
         const vidId = (match && match[2].length === 11) ? match[2] : null;
         if (vidId) {
-          container.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&playlist=${vidId}&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="rounded-2xl"></iframe>`;
+          container.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${vidId}?autoplay=1&mute=1&playlist=${vidId}&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen class="rounded-[2rem]"></iframe>`;
           container.classList.remove('hidden');
         }
       }
