@@ -64,7 +64,7 @@
               <button id="mode-file" class="py-2 rounded-xl text-xs font-bold border-2 border-[#E9D5FF] text-[#7C3AED]">파일 업로드</button>
             </div>
             <div id="area-url">
-              <input type="text" id="input-video-url" placeholder="YouTube 주소 복사/붙여넣기" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm">
+              <input type="text" id="input-video-url" placeholder="YouTube 주소 붙여넣기" class="w-full px-4 py-3 rounded-xl border-2 border-[#E9D5FF] outline-none text-sm">
             </div>
             <div id="area-file" class="hidden text-center">
               <input type="file" id="input-video-file" accept="video/*" class="hidden">
@@ -86,10 +86,11 @@
           
           <div id="view-letter" class="mb-8 px-2">
             <p class="text-2xl font-bold text-[#6B21A8] leading-relaxed font-cute">
-              "<span id="res-target" class="text-[#F472B6] font-bold"></span>" "<span id="res-baby" class="text-[#F472B6] font-bold"></span>"이에요 :)<br>
+              "<span id="res-target" class="text-[#F472B6] font-bold"></span>",<br>
+              저 "<span id="res-baby" class="text-[#F472B6] font-bold"></span>"이에요~<br><br>
               많이 기다리셨죠?<br>
-              엄마 뱃속에서 무럭무럭 자라서<br>
-              우리 <span id="res-month" class="text-[#F472B6] font-bold"></span>월에 봬요~
+              보고싶었었어요~<br>
+              우리 <span id="res-month" class="text-[#F472B6] font-bold"></span>월에 봬요🧡
             </p>
           </div>
           
@@ -107,11 +108,13 @@
 
         <div id="owner-controls" class="hidden">
           <div class="bg-white rounded-[2.5rem] p-8 shadow-md border border-[#F3E8FF] text-center mb-6">
-            <h3 class="text-xs font-bold text-[#6B21A8] mb-4">가족들에게 공유할 QR 코드</h3>
-            <div id="qrcode" class="flex justify-center mb-6 p-3 bg-white inline-block border-2 border-[#F3E8FF] rounded-2xl mx-auto shadow-sm"></div>
-            <button id="btn-copy-qr" class="w-full py-4 bg-[#F5F0FF] text-[#7C3AED] rounded-2xl text-base font-bold flex items-center justify-center gap-2 hover:bg-[#A78BFA] hover:text-white transition-all">
-              <i data-lucide="copy" class="w-5 h-5"></i> QR 이미지 복사하기
+            <h3 class="text-sm font-bold text-[#6B21A8] mb-4">✨ 가족들에게 카드 보내기</h3>
+            <div id="qrcode" class="flex justify-center mb-6 p-3 bg-white border-2 border-[#F3E8FF] rounded-2xl mx-auto shadow-sm"></div>
+            
+            <button id="btn-copy-link" class="w-full py-4 bg-[#F5F0FF] text-[#7C3AED] rounded-2xl text-base font-bold flex items-center justify-center gap-2 hover:bg-[#A78BFA] hover:text-white transition-all">
+              <i data-lucide="link" class="w-5 h-5"></i> 링크 복사하기
             </button>
+            <p class="text-[10px] text-[#A78BFA] mt-2">링크를 복사해서 카톡으로 보내주세요!</p>
           </div>
           <button onclick="location.href=location.pathname" class="w-full py-4 border-2 border-[#E9D5FF] text-[#7C3AED] rounded-2xl font-bold bg-white hover:bg-gray-50 transition-all">새로 만들기</button>
         </div>
@@ -120,9 +123,9 @@
   </div>
 
   <script>
-    let state = { babyName: '', recipients: [], month: '', vType: 'url', vSrc: '' };
+    let state = { babyName: '', recipients: [], month: '', vType: 'url', vSrc: '', currentShareUrl: '' };
 
-    // 월 버튼 세팅
+    // UI 초기화
     const monthContainer = document.getElementById('month-btns');
     for(let i=1; i<=12; i++) {
       const btn = document.createElement('button');
@@ -136,7 +139,6 @@
       monthContainer.appendChild(btn);
     }
 
-    // 대상 선택 세팅
     document.querySelectorAll('.recipient-btn').forEach(btn => {
       btn.onclick = () => {
         const name = btn.innerText;
@@ -150,7 +152,6 @@
       };
     });
 
-    // 영상 모드 전환
     document.getElementById('mode-url').onclick = () => {
       state.vType = 'url';
       document.getElementById('area-url').classList.remove('hidden');
@@ -166,7 +167,6 @@
       document.getElementById('mode-url').classList.remove('bg-[#A78BFA]', 'text-white');
     };
 
-    // 파일 업로드
     document.getElementById('input-video-file').onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
@@ -189,32 +189,35 @@
 
       const data = { n: state.babyName, r: allRecs.join(', '), m: state.month, v: (state.vType === 'url' ? vUrl : '') };
       const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
-      const shareUrl = `${window.location.origin}${window.location.pathname}?card=${encoded}`;
+      state.currentShareUrl = `${window.location.origin}${window.location.pathname}?card=${encoded}`;
 
       renderCard({ ...data, vRaw: (state.vType === 'file' ? state.vSrc : '') });
       
       const qrDiv = document.getElementById("qrcode");
       qrDiv.innerHTML = "";
-      new QRCode(qrDiv, { text: shareUrl, width: 160, height: 160, colorDark : "#6B21A8" });
+      new QRCode(qrDiv, { text: state.currentShareUrl, width: 140, height: 140, colorDark : "#6B21A8" });
+      
       document.getElementById('owner-controls').classList.remove('hidden');
       window.scrollTo(0,0);
     };
 
-    // QR 복사
-    document.getElementById('btn-copy-qr').onclick = async () => {
-      const qrDiv = document.getElementById('qrcode');
-      const canvas = qrDiv.querySelector('canvas');
-      const img = qrDiv.querySelector('img');
+    // 링크 복사하기 기능 (핵심!)
+    document.getElementById('btn-copy-link').onclick = async () => {
       try {
-        let blob;
-        if (canvas) blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-        else if (img) { const res = await fetch(img.src); blob = await res.blob(); }
-        await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-        alert('QR 코드가 복사되었습니다! 소중한 사람들에게 전달해 보세요 💖');
-      } catch (err) { alert('이미지를 길게 눌러 저장해 주세요!'); }
+        await navigator.clipboard.writeText(state.currentShareUrl);
+        alert('링크가 복사되었습니다! 카톡에 붙여넣어 보세요 💖');
+      } catch (err) {
+        // 구형 브라우저 대응
+        const textArea = document.createElement("textarea");
+        textArea.value = state.currentShareUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('링크가 복사되었습니다! 카톡에 붙여넣어 보세요 💖');
+      }
     };
 
-    // 카드 렌더링
     function renderCard(data) {
       document.getElementById('create-view').classList.add('hidden');
       document.getElementById('card-view').classList.remove('hidden');
@@ -227,7 +230,7 @@
       const container = document.getElementById('video-container');
       container.innerHTML = '';
       if (data.vRaw) {
-        container.innerHTML = `<video src="${data.vRaw}" autoplay muted playsinline controls class="w-full h-full object-cover rounded-[2rem] shadow-inner"></video>`;
+        container.innerHTML = `<video src="${data.vRaw}" autoplay muted playsinline controls class="w-full h-full object-cover rounded-[2rem]"></video>`;
         container.classList.remove('hidden');
       } else if (data.v) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
